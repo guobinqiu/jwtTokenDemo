@@ -9,6 +9,7 @@ import (
 )
 
 func mainHandler() *gin.Engine {
+	gin.SetMode(gin.TestMode)
 	r := gin.Default()
 	r.GET("/v1/user/login", loginHandler)
 	r.GET("/v1/user/info", jwtAuth, infoHandler)
@@ -58,5 +59,5 @@ func loginHandler(c *gin.Context) {
 }
 
 func infoHandler(c *gin.Context) {
-	c.Writer.Write([]byte(c.Value("user").(string)))
+	c.Writer.Write([]byte(c.GetString("user")))
 }
